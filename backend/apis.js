@@ -36,7 +36,6 @@ const signUp = (req,res,next) =>{
             }
         }
     })
-
 }
 
 const userLogin = (req,res,next) => {
@@ -70,6 +69,23 @@ module.exports = function(app){
     app.post('/register', signUp);
     app.post('/login', userLogin);
     app.get('/home', homePage);
+
+    app.post('/blog/:userID',newBlog);
+    app.put('/blog/:userID/:blogID', updateBlog);
+    app.get('/blog/:userID', getUserBlog);
+    app.get('blog/feed', getAllBlogs);
+    app.delete('blog/:userID/:blogID', deleteBlog);
+
+    app.post('/comment/:userID/:blogID', writeComment);
+    app.delete('/comment/:userID/:blogID', removeComment);
+    app.post('/like/:userID/:blogID', hitLike);
+    app.put('/like/:userID/:blogID', disLike);
+
+    
+
+
+    
+
 
 }
 
