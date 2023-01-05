@@ -12,7 +12,11 @@ const userSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    blogs: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'blog'
+    }]
 });
 
 module.exports = mongoose.model('UserProfile', userSchema);
