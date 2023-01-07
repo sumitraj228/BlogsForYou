@@ -1,8 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoConnect = require('./database/db_connection.js')
-const user = require('./models/userProfile');
-const blog = require('./models/blog');
 
 const app = express();
 

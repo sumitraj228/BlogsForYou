@@ -8,7 +8,19 @@ const blogSchema = new mongoose.Schema({
     content:{
         type:String,
         required: true
-    }
+    },
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'comment'
+    }],
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'UserProfile'
+    }],
+    dislikes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'UserProfile'
+    }]
 });
 
 module.exports = mongoose.model('blog',blogSchema);
