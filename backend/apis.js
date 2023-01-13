@@ -3,26 +3,33 @@ const userProfilef = require('./utils/userProfilef');
 const blogf = require('./utils/blogf');
 const commentf = require('./utils/commentf');
 const likef = require('./utils/likef');
+const passport = require('passport');
 
 module.exports = function(app){
 
     app.get('/',welcomef.welcomePage);
     app.get('/register', userProfilef.registerPage);
     app.post('/register', userProfilef.signUp);
-    app.post('/login', userProfilef.userLogin);
-    app.get('/home', userProfilef.homePage);
+    app.get('/login', userProfilef.loginPage);
+    app.post('/login', passport.authenticate('local'),userProfilef.userLogin);
+    app.get('/home/:userID', userProfilef.homePage);
 
+    app.get('/blog/:userID',blogf.writeBlog);
     app.post('/blog/:userID',blogf.newBlog);
-    app.put('/blog/:userID/:blogID', blogf.updateBlog);
-    app.get('/blog/:userID', blogf.getUserBlog);
-    app.get('/blog/feed/all', blogf.getAllBlogs);
-    app.delete('/blog/:userID/:blogID', blogf.deleteBlog);
+
+    app.get('/blog/update/:userID/:blogID', blogf.updateBlogPage);
+    app.post('/blog/update/:userID/:blogID', blogf.updateBlog);
+
+    app.get('/blog/:userID/all', blogf.getUserBlog);
+    app.get('/feed', blogf.getAllBlogs);
+    app.get('/blog/delete/:userID/:blogID', blogf.deleteBlog);
 
     app.post('/comment/:userID/:blogID', commentf.writeComment);
     app.delete('/comment/:userID/:blogID/:commentID', commentf.removeComment);
     app.post('/like/:userID/:blogID', likef.hitLike);
+    
+    app.get('/logout',userProfilef.logout)
 
-
-}
+} 
 
 

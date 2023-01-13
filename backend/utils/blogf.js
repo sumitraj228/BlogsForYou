@@ -2,6 +2,16 @@ const user = require('../../models/userProfile');
 const blog = require('../../models/blog');
 const mongoose = require('mongoose');
 
+const writeBlog = (req,res,next)=>{
+
+    let userID = req.params.userID;
+    console.log("You are in the write blog Page");
+    res.render('createBlog',{
+        userID:userID
+    })
+
+}
+
 const newBlog = (req,res,next) =>{
 
     let title = req.body.title;
@@ -30,12 +40,43 @@ const newBlog = (req,res,next) =>{
                     let dataID = data._id;
                     result[0].blogs.push(dataID);
                     await result[0].save();
-                    res.send(result)
+                    console.log("A new blog got created");
+                    res.redirect(`/home/${userID}`);
                 }
             })
             
         }
     });
+    // res.send("Something went wrong in creating the blog")
+
+}
+
+const updateBlogPage = (req,res,next) =>{
+
+    // res.send("In the update blog section")
+    let userID = req.params.userID;
+    let blogID = req.params.blogID;
+
+    console.log("In the update blog Page");
+
+    blog.findById(blogID,(err,data)=>{
+        if(err)
+            throw err;
+        else
+        {
+            console.log(data);
+            let title = data.title;
+            let content = data.content;
+
+            res.render('updateBlog',{
+                userID: userID,
+                blogID: blogID,
+                title: title,
+                content: content
+            });
+        }
+    })
+    
 
 }
 
@@ -61,7 +102,8 @@ const updateBlog = async (req,res,next) =>{
             throw err;
         else 
         {
-            res.send(data);
+            console.log("Data updated successfullly");
+            res.redirect(`/home/${userID}`);
         }   
             
     })
@@ -77,23 +119,47 @@ const getUserBlog = async (req,res,next) =>{
         "_id": userID
     };
 
-    const data = await user.find(query).populate({path: "blogs", model: "blog"});
-    res.json(data);
+    // const data = await user.find(query).populate({path: "blogs", model: "blog"});
+    const data = await user.find(query).populate({path: "blogs"});
+    
+    // console.log(data[0]);
+    // res.json(data);
+    // let result = JSON.stringify(data[0]);
+    // const ans = JSON.parse(result)
+    // console.log(ans)
+    // console.log(data)
+    
+    
+    
+    res.render('getUserBlogs',{
+        data: data[0],
+        userID: userID
+    });
 
 }
 
 const getAllBlogs = (req,res,next) =>{
 
+    console.log("You are in the feed section");
+    // res.send("You are in the feed section");
+
     blog.find({},(err,data)=>{
         if(err)
             throw err;
         else    
-            res.send(data);
+        {
+            // console.log(data)
+            res.render('getFeeds',{
+                data: data
+            })
+        }
+            
     })
 }
 
 const deleteBlog = (req,res,next) =>{
 
+    console.log("You are in the delete Process")
     let userID = req.params.userID;
     let blogID = req.params.blogID;
 
@@ -117,7 +183,10 @@ const deleteBlog = (req,res,next) =>{
                 if(err)
                     throw err;
                 else    
-                    res.send("The given ID got deleted from user as blog model");
+                {
+                    console.log("You have deleted successfully")
+                    res.redirect(`/home/${userID}`);
+                }
             })
         }
     })
@@ -129,5 +198,7 @@ module.exports = {
     updateBlog: updateBlog,
     getUserBlog: getUserBlog,
     getAllBlogs: getAllBlogs,
-    deleteBlog: deleteBlog
+    deleteBlog: deleteBlog,
+    writeBlog: writeBlog,
+    updateBlogPage: updateBlogPage
 };

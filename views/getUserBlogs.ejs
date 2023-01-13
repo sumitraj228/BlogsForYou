@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<head>
+<title>User Blogs</title>
+<link href="https://fonts.googleapis.com/css?family=Baloo+Bhai|Candal|Chewy&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+</head>
+<body>
+<div class="todo-container">
+<h2>Your Blogs</h2>
+<div class="todo">
+<ul class="todo-list">
+<% for(var i=0; i<data.blogs.length; i++){ %>
+<h2><%=data.blogs[i].title%></h2>
+<h3><%=data.blogs[i].content%></h3>
+<a href="/blog/update/<%=userID%>/<%=data.blogs[i]._id%>">Update</a>
+<a href="/blog/delete/<%=userID%>/<%=data.blogs[i]._id%>">Delete</a>
+<br><br>
+<%}%>
+</ul>
+</div>
+</div>
+</body>

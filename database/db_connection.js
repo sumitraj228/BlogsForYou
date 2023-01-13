@@ -6,7 +6,7 @@ dotenv.config();
 
 mongoose.set('strictQuery', false);
 
-mongoose.connect(process.env.DB_CONNECT,{
+const mongoConnect = mongoose.connect(process.env.DB_CONNECT,{
     useNewUrlParser: true,
 },(err)=>{
     if(err)
@@ -15,7 +15,9 @@ mongoose.connect(process.env.DB_CONNECT,{
         console.log("Database connected");
 });
 
-// module.exports = mongoConnect;
+module.exports = {
+    mongoConnect: mongoConnect
+}
 
 
 
