@@ -41,21 +41,6 @@ const signUp = (req,res,next) =>{
 
 const userLogin = (req,res,next) => {
 
-    // let username = req.body.username;
-    // let password = req.body.password;
-
-    // let query = {username: username, password: password};
-    // user.find(query,(err,result)=>{
-    //     if(err)
-    //         throw err;
-    //     else
-    //     {
-    //         if(result.length>0)
-    //             res.send("Welcome to the login Page");
-    //         else    
-    //             res.send("User doesnot exist. Please register!")
-    //     }        
-    // })
    console.log(req.user);
    console.log("User finally logged in");
    let userID = req.user._id;
@@ -66,6 +51,8 @@ const userLogin = (req,res,next) => {
 const homePage = (req,res,next) =>{
 
     console.log("You are in the home Page now"); 
+    console.log(req.user);
+    console.log(req.session)
     let username = req.user.username;
     let userID = req.user._id;
     

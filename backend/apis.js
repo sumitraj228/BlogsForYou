@@ -22,12 +22,13 @@ module.exports = function(app){
 
     app.get('/blog/:userID/all', blogf.getUserBlog);
     app.get('/feed', blogf.getAllBlogs);
+    app.get('/feed/:userID/:blogID', blogf.getOneBlog);
     app.get('/blog/delete/:userID/:blogID', blogf.deleteBlog);
 
     app.post('/comment/:userID/:blogID', commentf.writeComment);
     app.delete('/comment/:userID/:blogID/:commentID', commentf.removeComment);
-    app.post('/like/:userID/:blogID', likef.hitLike);
-    
+    app.get('/like/:userID/:blogID', likef.hitLike);
+     
     app.get('/logout',userProfilef.logout)
 
 } 

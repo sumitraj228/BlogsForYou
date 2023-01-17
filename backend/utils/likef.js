@@ -14,7 +14,8 @@ const hitLike = (req,res,next) =>{
             {
                 result[0].likes.push(userID);
                 await result[0].save();
-                res.send("Liked the blog");
+                console.log("Liked the blog");
+                res.redirect('/feed');
             }
             else
             {   
@@ -26,7 +27,10 @@ const hitLike = (req,res,next) =>{
                     if(error)
                         throw error;
                     else    
-                        res.send("You removed your like from this blog.");
+                    {    
+                        console.log("You removed your like from this blog.");
+                        res.redirect('/feed');
+                    }
                 })
             }
         }

@@ -4,28 +4,7 @@
 <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai|Candal|Chewy&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
 integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script>
-  $(document).ready(function(){
-    var maxLength = 300;
-    $(".show-read-more").each(function(){
-        var myStr = $(this).text();
-        if($.trim(myStr).length > maxLength){
-            var newStr = myStr.substring(0, maxLength);
-            var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
-            $(this).empty().html(newStr);
-            $(this).append(' <a href="javascript:void(0);" class="read-more">read more...</a>');
-            $(this).append('<span class="more-text">' + removedStr + '</span>');
-        }
-    });
-    $(".read-more").click(function(){
-        $(this).siblings(".more-text").contents().unwrap();
-        $(this).remove();
-    });
-});
-</script>
-
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <style>
     .container {
     height: auto;
@@ -70,27 +49,31 @@ body{
 hr.new1 {
   border-top: 1px solid rgb(46, 42, 43);
 }
-
 </style>
 
 </head>
 <body>
 <div class="todo-container">
-<h1 style="text-align: center;color: #f1f1f1;">My Blogs</h1>
 <div class="">
 <ul class="todo-list">
-<% for(var i=0; i<data.blogs.length; i++){ %>
     <div class="container">
-        <h1 style="text-align: left;font-size: 30px;font-family: Georgia, serif;"><%=data.blogs[i].title%></h1>
+        <a href="/blog/delete/<%=userID%>/<%=blogID%>"><button class="btn">Delete</button></a>
+        <a href="/blog/update/<%=userID%>/<%=blogID%>"><button class="btn">Update</button></a>
+        <h1 style="text-align: left;font-size: 30px;font-family: Georgia, serif;"><%=title%></h1>
         <hr class="new1">
-        <p style="font-family: Georgia, sans-serif; font-size: 18px;word-spacing: 5px;line-height: 26pt;" class="show-read-more"><%=data.blogs[i].content%></p><br>
+        <p style="font-family: Georgia, sans-serif; font-size: 18px;word-spacing: 5px;line-height: 26pt;" class="show-read-more"><%=content%></p><br>
+        <br>
+        <hr class="new1">
+        <h3>Comments
+        <a href="/like/<%=userID%>/<%=blogID%>"><button class="btn" style="height: 40px;font-size: 15px;text-align: center;padding-left: 10px;padding-right: 10px;border-radius: 6px;float: right;float: right; display: inline-flex; margin-top: 15px;">Like: <%=comment.likes.length%></button></a>  
+        </h3>
+        <% for(var i=0; i<comment.comments.length; i++){ %>
+        <i class='fas fa-user-alt' ><p style="display:inline-flex; margin-left:10px ;"><%=comment.comments[i].text%></p></i>
         
         <br>
-        <a href="/blog/delete/<%=userID%>/<%=data.blogs[i]._id%>"><button class="btn">Delete</button></a>
-        <a href="/blog/update/<%=userID%>/<%=data.blogs[i]._id%>"><button class="btn">Update</button></a>
+        <%}%>
     </div>
     <br>
-<%}%>
 </ul>
 </div>
 </div>

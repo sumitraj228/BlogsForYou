@@ -47,7 +47,6 @@ const newBlog = (req,res,next) =>{
             
         }
     });
-    // res.send("Something went wrong in creating the blog")
 
 }
 
@@ -122,15 +121,6 @@ const getUserBlog = async (req,res,next) =>{
     // const data = await user.find(query).populate({path: "blogs", model: "blog"});
     const data = await user.find(query).populate({path: "blogs"});
     
-    // console.log(data[0]);
-    // res.json(data);
-    // let result = JSON.stringify(data[0]);
-    // const ans = JSON.parse(result)
-    // console.log(ans)
-    // console.log(data)
-    
-    
-    
     res.render('getUserBlogs',{
         data: data[0],
         userID: userID
@@ -142,6 +132,7 @@ const getAllBlogs = (req,res,next) =>{
 
     console.log("You are in the feed section");
     // res.send("You are in the feed section");
+    let userID = req.user._id;
 
     blog.find({},(err,data)=>{
         if(err)
@@ -150,11 +141,39 @@ const getAllBlogs = (req,res,next) =>{
         {
             // console.log(data)
             res.render('getFeeds',{
-                data: data
+                data: data,
+                userID: userID
             })
         }
             
     })
+}
+
+const getOneBlog = (req,res,next) =>{
+
+    let userID = req.params.userID;
+    let blogID = req.params.blogID;
+
+    blog.findById(blogID,async (err,data)=>{
+        if(err)
+            throw err;
+        else  
+        {
+            // console.log(data)
+            let comments = await blog.find({"_id":blogID}).populate({path: "comments"});
+            // console.log(comments[0])
+            
+            res.render('getOneBlog',{
+                title: data.title,
+                content: data.content,
+                userID: userID,
+                blogID: blogID,
+                comment: comments[0]
+            })
+        }
+        
+    })
+    
 }
 
 const deleteBlog = (req,res,next) =>{
@@ -185,7 +204,7 @@ const deleteBlog = (req,res,next) =>{
                 else    
                 {
                     console.log("You have deleted successfully")
-                    res.redirect(`/home/${userID}`);
+                    res.redirect(`/blog/${userID}/all`);
                 }
             })
         }
@@ -200,5 +219,6 @@ module.exports = {
     getAllBlogs: getAllBlogs,
     deleteBlog: deleteBlog,
     writeBlog: writeBlog,
-    updateBlogPage: updateBlogPage
+    updateBlogPage: updateBlogPage,
+    getOneBlog: getOneBlog
 };
