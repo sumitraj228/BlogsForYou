@@ -84,20 +84,13 @@ hr.new1 {
 <div class="todo">
 <ul class="todo-list">
 <% for(var i=0; i<data.length; i++){ %>
-    
-    
     <div class="container" >
+    <i class='fas fa-user-alt' ><p style="display:inline-flex; margin-left:10px ;"><%=data[i].createdBy%></p></i><p style="display:inline-flex; margin-left:10px; float: right; font-style: italic;"><%=data[i].date.toDateString()%></p>
     <h1 style="text-align: left;font-size: 30px;font-family: Georgia, serif;"><a href="/feed/<%=userID%>/<%=data[i]._id%>" style="text-decoration:none; color: black;"><%=data[i].title%></a></h1>
     <hr class="new1">
     <p style="font-family: Georgia, sans-serif; font-size: 18px;word-spacing: 5px;line-height: 26pt; white-space: nowrap; overflow: hidden;
     text-overflow: ellipsis;max-width: 50ch;" class="show-read-more"><a href="/feed/<%=userID%>/<%=data[i]._id%>" style="text-decoration:none; color: black;"><%=data[i].content%></a></p>
-    <form action="/comment/<%=userID%>/<%=data[i]._id%>" method="post" name="Write_Comment" class="w3-container w3-card-4 w3-light-grey postbutton">
-        <input type="text" class="w3-input w3-border-0 input" name="text" placeholder="Write your comment" required="" style="height: 30px;font-size: 15px;padding-right: 100px;border-radius: 6px;"/>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Write_Comment" type="Submit" style="height: 40px;font-size: 15px;text-align: center;padding-left: 10px;padding-right: 10px;border-radius: 6px; ">Post</button>
-    </form>
-    <a href="/like/<%=userID%>/<%=data[i]._id%>"><button class="btn" style="height: 40px;font-size: 15px;text-align: center;padding-left: 10px;padding-right: 10px;border-radius: 6px;float: right;">Like: <%=data[i].likes.length%></button></a>    
     </div>
-    <!-- </a> -->
 <%}%>
 </ul>
 </div>

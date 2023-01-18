@@ -20,7 +20,18 @@ const blogSchema = new mongoose.Schema({
     dislikes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'UserProfile'
-    }]
+    }],
+    createdBy: {
+        type: String,
+        required: true,
+    },
+    userID: {
+        type: mongoose.Schema.Types.ObjectId
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    },
 });
 
 module.exports = mongoose.model('blog',blogSchema);

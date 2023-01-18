@@ -25,7 +25,7 @@ const writeComment = (req,res,next) =>{
                 {
                     result[0].comments.push(data._id);
                     await result[0].save();
-                    res.redirect('/feed')
+                    res.redirect(`/feed/${userID}/${blogID}`);
                 }
             })
         }

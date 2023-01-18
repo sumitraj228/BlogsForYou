@@ -15,7 +15,7 @@ const hitLike = (req,res,next) =>{
                 result[0].likes.push(userID);
                 await result[0].save();
                 console.log("Liked the blog");
-                res.redirect('/feed');
+                res.redirect(`/feed/${userID}/${blogID}`);
             }
             else
             {   
@@ -29,7 +29,7 @@ const hitLike = (req,res,next) =>{
                     else    
                     {    
                         console.log("You removed your like from this blog.");
-                        res.redirect('/feed');
+                        res.redirect(`/feed/${userID}/${blogID}`);
                     }
                 })
             }

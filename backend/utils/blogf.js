@@ -17,6 +17,7 @@ const newBlog = (req,res,next) =>{
     let title = req.body.title;
     let content = req.body.content;
     let userID = req.params.userID;
+    let createdBy = req.user.name;
 
     let query = {
         "_id": userID
@@ -24,7 +25,9 @@ const newBlog = (req,res,next) =>{
 
     const uploadBlog = new blog({
         title: title,
-        content: content
+        content: content,
+        createdBy: createdBy,
+        userID: userID
     });
 
     blog.create(uploadBlog,(err,data) => {
@@ -134,6 +137,7 @@ const getAllBlogs = (req,res,next) =>{
     // res.send("You are in the feed section");
     let userID = req.user._id;
 
+
     blog.find({},(err,data)=>{
         if(err)
             throw err;
@@ -153,7 +157,24 @@ const getOneBlog = (req,res,next) =>{
 
     let userID = req.params.userID;
     let blogID = req.params.blogID;
+    let userBlog = false;
 
+    user.findById(userID,(err,data)=>{
+        if(err)
+            throw err;
+        else
+        {
+            for(let i=0;i<data.blogs.length;i++)
+            {
+                if(data.blogs[i]._id == blogID)
+                {
+                    userBlog = true;
+                    break;
+                }
+            }
+        }
+    })
+        
     blog.findById(blogID,async (err,data)=>{
         if(err)
             throw err;
@@ -168,7 +189,8 @@ const getOneBlog = (req,res,next) =>{
                 content: data.content,
                 userID: userID,
                 blogID: blogID,
-                comment: comments[0]
+                comment: comments[0],
+                userBlog: userBlog
             })
         }
         

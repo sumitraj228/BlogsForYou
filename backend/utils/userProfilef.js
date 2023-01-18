@@ -3,20 +3,25 @@ const user = require('../../models/userProfile');
 const registerPage = (req,res,next) =>{
     
     console.log("Welcome to the Register Page");
-    res.render('register');
+    res.render('register',{
+        failure: false
+    });
 }
 
 const loginPage = (req,res,next) =>{
     console.log("You are in the login Page");
     res.render('login');
 }
+
 const signUp = (req,res,next) =>{
 
     console.log("User got registered")
     let username = req.body.username;
     let password = req.body.password;
+    let name = req.body.name;
 
     const newUser = new user({
+        name: name,
         username: username,
         password: password
     });
@@ -29,11 +34,15 @@ const signUp = (req,res,next) =>{
         else    
         {
             if(result.length>0)
-                res.send("User exists!");
+                res.render('register',{
+                    failure: true
+                });
             else
             {
                 await newUser.save();
-                res.redirect('/');
+                res.render('welcome',{
+                    success: true
+                });
             }
         }
     })
@@ -53,11 +62,11 @@ const homePage = (req,res,next) =>{
     console.log("You are in the home Page now"); 
     console.log(req.user);
     console.log(req.session)
-    let username = req.user.username;
+    let name = req.user.name;
     let userID = req.user._id;
     
     res.render('home',{
-        name: username,
+        name: name,
         userID: userID
     });
 }

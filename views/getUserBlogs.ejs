@@ -81,10 +81,9 @@ hr.new1 {
 <ul class="todo-list">
 <% for(var i=0; i<data.blogs.length; i++){ %>
     <div class="container">
-        <h1 style="text-align: left;font-size: 30px;font-family: Georgia, serif;"><%=data.blogs[i].title%></h1>
+        <h1 style="text-align: left;font-size: 30px;font-family: Georgia, serif;"><a href="/feed/<%=userID%>/<%=data.blogs[i]._id%>" style="text-decoration:none; color: black;"><%=data.blogs[i].title%></h1></a>
         <hr class="new1">
-        <p style="font-family: Georgia, sans-serif; font-size: 18px;word-spacing: 5px;line-height: 26pt;" class="show-read-more"><%=data.blogs[i].content%></p><br>
-        
+        <p style="font-family: Georgia, sans-serif; font-size: 18px;word-spacing: 5px;line-height: 26pt;" class="show-read-more"><a href="/feed/<%=userID%>/<%=data.blogs[i]._id%>" style="text-decoration:none; color: black;"><%=data.blogs[i].content%></a></p><br>
         <br>
         <a href="/blog/delete/<%=userID%>/<%=data.blogs[i]._id%>"><button class="btn">Delete</button></a>
         <a href="/blog/update/<%=userID%>/<%=data.blogs[i]._id%>"><button class="btn">Update</button></a>
