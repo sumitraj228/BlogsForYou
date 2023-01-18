@@ -79,8 +79,8 @@ hr.new1 {
 <h1 style="text-align: center;color: #f1f1f1;">My Blogs</h1>
 <div class="">
 <ul class="todo-list">
-<% for(var i=0; i<data.blogs.length; i++){ %>
-    <div class="container">
+<% for(var i=data.blogs.length-1; i>=0; i--){ %>
+    <div class="container" onclick="location.href='/feed/<%=userID%>/<%=data.blogs[i]._id%>';" style="cursor:pointer;">
         <h1 style="text-align: left;font-size: 30px;font-family: Georgia, serif;"><a href="/feed/<%=userID%>/<%=data.blogs[i]._id%>" style="text-decoration:none; color: black;"><%=data.blogs[i].title%></h1></a>
         <hr class="new1">
         <p style="font-family: Georgia, sans-serif; font-size: 18px;word-spacing: 5px;line-height: 26pt;" class="show-read-more"><a href="/feed/<%=userID%>/<%=data.blogs[i]._id%>" style="text-decoration:none; color: black;"><%=data.blogs[i].content%></a></p><br>

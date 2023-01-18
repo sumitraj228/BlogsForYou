@@ -9,7 +9,7 @@ const commentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'UserProfile'
     },
-    createdBy: {
+    createdOn: {
         type: Date,
         default: Date.now
     }
