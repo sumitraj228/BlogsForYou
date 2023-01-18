@@ -94,7 +94,7 @@ hr.new1 {
           </form>
           <a href="/like/<%=userID%>/<%=blogID%>"><button class="Postbtn" >Like: <%=comment.likes.length%></button></a>            
         </div>
-        <% for(var i=0; i<comment.comments.length; i++){ %>
+        <% for(var i=comment.comments.length-1; i>=0; i--){ %>
         <i class='fas fa-user-alt' ><p style="display:inline-flex; margin-left:10px ;"><%=comment.comments[i].text%></p></i>
         
         <br>
