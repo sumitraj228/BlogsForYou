@@ -4,35 +4,42 @@ const comment = require('../../models/comment');
 
 const writeComment = (req,res,next) =>{
     
-    let text = req.body.text;
-    let userID = req.params.userID;
-    let blogID = req.params.blogID;
+    if('user' in req)
+    {
+        let text = req.body.text;
+        let userID = req.params.userID;
+        let blogID = req.params.blogID;
 
-    let query = {
-        text: text,
-        userDetails: userID
-    }
-
-    comment.create(query,(err,data) =>{
-        if(err)
-            throw err;
-        else
-        {
-            blog.find({"_id":blogID},async (error,result)=>{
-                if(error)
-                    throw err;
-                else
-                {
-                    result[0].comments.push(data._id);
-                    await result[0].save();
-                    res.redirect(`/feed/${userID}/${blogID}`);
-                }
-            })
+        let query = {
+            text: text,
+            userDetails: userID
         }
-    })
+
+        comment.create(query,(err,data) =>{
+            if(err)
+                throw err;
+            else
+            {
+                blog.find({"_id":blogID},async (error,result)=>{
+                    if(error)
+                        throw err;
+                    else
+                    {
+                        result[0].comments.push(data._id);
+                        await result[0].save();
+                        res.redirect(`/feed/${userID}/${blogID}`);
+                    }
+                })
+            }
+        })
+    }
+    else    
+        res.redirect('/')
+    
 }
 
 const removeComment = (req,res,next) =>{
+
 
     let userID = req.params.userID;
     let blogID = req.params.blogID;
@@ -48,7 +55,6 @@ const removeComment = (req,res,next) =>{
         else    
         {
             commentID = mongoose.Types.ObjectId(commentID)
-            console.log(commentID);
 
             blog.findOneAndUpdate(blogQuery, {
                 $pull: {
