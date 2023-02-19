@@ -20,6 +20,8 @@ const sessionStore = MongoStore.create({
     mongoUrl: process.env.DB_CONNECT,
     collection: "sessions"
 })
+ 
+
 
 app.use(session({
     secret: 'some secret',
